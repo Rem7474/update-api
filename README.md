@@ -4,11 +4,16 @@
 
 ---
 
-## 🔧 Installation via script
+## 🚀 Installation rapide
 
 ```bash
-chmod +x install-update-api.sh
-./install-update-api.sh
+bash <(curl -s https://raw.githubusercontent.com/Rem7474/update-api/main/install-update-api.sh)
+```
+
+ou avec `wget` :
+
+```bash
+bash <(wget -qO- https://raw.githubusercontent.com/Rem7474/update-api/main/install-update-api.sh)
 ```
 
 ---
@@ -29,7 +34,7 @@ Puis modifie les valeurs selon ton setup :
 
 ---
 
-## 🔐 Requête API
+## 🔐 Requêtes API
 
 ### Lancer une mise à jour
 
@@ -49,4 +54,4 @@ curl http://IP:8000/immich/logs \
 
 ## ✍️ Auteur
 
-Rem7474
+**Rem7474**
