@@ -1,4 +1,4 @@
-version: '3.8'
+version: '1.0'
 
 services:
   update-api:
@@ -7,9 +7,11 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - API_KEY=my-secret-token
+      - API_KEY=${API_KEY}
+      - ROUTE_PREFIX=${ROUTE_PREFIX}
+      - DOCKER_COMPOSE_PATH=/mnt/project
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./update.sh:/usr/local/bin/update.sh
-      - /root/immich-app:/app/docker  # adapte ce chemin à ton dossier docker-compose
+      - ${HOST_COMPOSE_PATH}:/mnt/project
     restart: unless-stopped
