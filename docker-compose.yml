@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  update-api:
+    build: .
+    container_name: update-api
+    ports:
+      - "8000:8000"
+    environment:
+      - API_KEY=my-secret-token
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./update.sh:/usr/local/bin/update.sh
+      - /root/immich-app:/app/docker  # adapte ce chemin à ton dossier docker-compose
+    restart: unless-stopped
