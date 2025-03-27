@@ -8,3 +8,4 @@ services:
     volumes:
       - .:/app
       - ${HOST_COMPOSE_PATH}:/mnt/project
+      - /var/run/docker.sock:/var/run/docker.sock
