@@ -80,6 +80,7 @@ Assure-toi que **NPM** est configuré pour gérer les sous-routes correctement a
 ├── Dockerfile
 ├── main.py
 ├── requirements.txt
+└── update.sh         # (facultatif)
 ```
 
 ---
@@ -110,3 +111,47 @@ PR et suggestions bienvenues !
 ## 🧑‍💻 Auteur
 
 Projet créé par **Rem7474**
+
+---
+
+## 🔁 Mettre à jour depuis GitHub
+
+Si tu as déjà cloné ce dépôt sur ton LXC et que le conteneur tourne, voici comment mettre à jour facilement :
+
+### 1. 📂 Aller dans le dossier du projet
+
+```bash
+cd /chemin/vers/update-api
+```
+
+### 2. 📥 Récupérer les dernières modifications
+
+```bash
+git pull origin main
+```
+
+> 🔁 Si ta branche est `master` :
+```bash
+git pull origin master
+```
+
+### 3. 🔧 Rebuild l'image avec le nouveau Dockerfile
+
+```bash
+docker compose build
+```
+
+### 4. 🔄 Redémarrer le conteneur
+
+```bash
+docker compose up -d
+```
+
+### 5. 🧹 (Facultatif) Nettoyer les anciennes images
+
+```bash
+docker image prune -f
+```
+
+---
+
