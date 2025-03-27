@@ -18,6 +18,8 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY main.py .
+COPY update.sh .
+RUN chmod +x update.sh
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 

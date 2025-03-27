@@ -1,28 +1,25 @@
-from fastapi import FastAPI, Header, HTTPException
-import subprocess
 import os
+import subprocess
+from fastapi import FastAPI, Request, Header, HTTPException
 
 app = FastAPI()
-subapi = FastAPI()
 
-API_KEY = os.environ.get("API_KEY", "my-secret-token")
-ROUTE_PREFIX = os.environ.get("ROUTE_PREFIX", "immich")
-DOCKER_COMPOSE_PATH = os.environ.get("DOCKER_COMPOSE_PATH", "/mnt/project")
+API_KEY = os.environ.get("API_KEY")
+ROUTE_PREFIX = os.environ.get("ROUTE_PREFIX")
+CONTAINER_NAME = os.environ.get("CONTAINER_NAME")
 
-@subapi.post("/update")
-def update(x_api_key: str = Header(None)):
-    if x_api_key != API_KEY:
-        raise HTTPException(status_code=401, detail="Invalid API token")
+@app.post("/{prefix}/update")
+async def update(prefix: str, request: Request, x_api_key: str = Header(...)):
+    if x_api_key != API_KEY or prefix != ROUTE_PREFIX:
+        raise HTTPException(status_code=401, detail="Unauthorized")
 
     try:
-        result = subprocess.run(
-            ["bash", "-c", f"cd {DOCKER_COMPOSE_PATH} && docker compose pull && docker compose up -d"],
-            capture_output=True,
-            text=True,
-            check=True
+        # Lancer le script en tâche de fond (sans bloquer l'API)
+        subprocess.Popen(
+            ["bash", "/app/update.sh"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
         )
-        return {"status": "success", "output": result.stdout}
-    except subprocess.CalledProcessError as e:
-        raise HTTPException(status_code=500, detail=e.stderr)
-
-app.mount(f"/{ROUTE_PREFIX}", subapi)
+        return {"status": "Update started in background."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
