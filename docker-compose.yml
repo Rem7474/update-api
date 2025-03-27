@@ -1,17 +1,10 @@
-version: '1.0'
-
+version: "3.9"
 services:
   update-api:
     build: .
-    container_name: update-api
     ports:
       - "8000:8000"
-    environment:
-      - API_KEY=${API_KEY}
-      - ROUTE_PREFIX=${ROUTE_PREFIX}
-      - DOCKER_COMPOSE_PATH=/mnt/project
+    env_file: .env
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./update.sh:/usr/local/bin/update.sh
+      - .:/app
       - ${HOST_COMPOSE_PATH}:/mnt/project
-    restart: unless-stopped
