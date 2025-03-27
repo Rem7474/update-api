@@ -41,8 +41,6 @@ API_KEY=my-secret-token                    # Token d'authentification
 ROUTE_PREFIX=immich                        # Suffixe de l'URL (ex: /immich/update)
 ```
 
-> ⚠️ Ne pas modifier `DOCKER_COMPOSE_PATH`, il est fixé en interne à `/mnt/project`.
-
 ---
 
 ### 4. 🐳 Lancer le conteneur
