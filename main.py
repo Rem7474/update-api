@@ -27,8 +27,8 @@ async def update_container(prefix: str, request: Request):
 
     try:
         with open(LOG_FILE, "w") as log:
-            subprocess.run(["docker-compose", "pull"], cwd=COMPOSE_PROJECT_PATH, stdout=log, stderr=log, check=True)
-            subprocess.run(["docker-compose", "up", "-d"], cwd=COMPOSE_PROJECT_PATH, stdout=log, stderr=log, check=True)
+            subprocess.run(["docker", "compose", "pull"], cwd=COMPOSE_PROJECT_PATH, stdout=log, stderr=log, check=True)
+            subprocess.run(["docker", "compose", "up", "-d"], cwd=COMPOSE_PROJECT_PATH, stdout=log, stderr=log, check=True)
             subprocess.run(["docker", "image", "prune", "-f"], stdout=log, stderr=log, check=True)
         return {"status": "success", "message": f"{CONTAINER_NAME} updated successfully."}
     except subprocess.CalledProcessError:
